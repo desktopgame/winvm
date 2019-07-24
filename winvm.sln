@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "winvm", "winvm\winvm.csproj", "{D81B0A42-C263-4CE6-90EA-92E4D1FC053F}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "winvmSetup", "winvmSetup\winvmSetup.vdproj", "{E7E39AA8-0358-4C04-B613-54650E087259}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{D81B0A42-C263-4CE6-90EA-92E4D1FC053F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D81B0A42-C263-4CE6-90EA-92E4D1FC053F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D81B0A42-C263-4CE6-90EA-92E4D1FC053F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E39AA8-0358-4C04-B613-54650E087259}.Debug|Any CPU.ActiveCfg = Debug
+		{E7E39AA8-0358-4C04-B613-54650E087259}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

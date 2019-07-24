@@ -156,7 +156,7 @@ namespace winvm
             foreach (var reg in regs)
             {
                 RegistryKey rParentKey =
-                 Registry.LocalMachine.OpenSubKey(reg.Key);
+                 Registry.LocalMachine.OpenSubKey(reg.Key, true);
                 if(rParentKey == null)
                 {
                     continue;

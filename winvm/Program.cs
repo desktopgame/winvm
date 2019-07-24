@@ -57,6 +57,7 @@ namespace winvm
                         outputArgs.Value,
                         GetRegTextRecursive(GetRegistryPath(pathOption), GetGrepKey(grepKeyOption), GetGrepAttr(grepAttrOption))
                     );
+                    Console.WriteLine("ダンプが終了しました。");
                     return 0;
                 });
             });
@@ -225,15 +226,21 @@ namespace winvm
                 }
                 rParentKey.Close();
             }
-            Console.WriteLine("変更されなかった一覧");
-            foreach(var e in discardList)
+            if(saveList.Count > 0)
             {
-                Console.WriteLine("    " + e);
-            }
-            Console.WriteLine("変更された一覧");
-            foreach (var e in saveList)
+                Console.WriteLine("変更されなかった一覧");
+                foreach (var e in discardList)
+                {
+                    Console.WriteLine("    " + e);
+                }
+                Console.WriteLine("変更された一覧");
+                foreach (var e in saveList)
+                {
+                    Console.WriteLine("     " + e);
+                }
+            } else
             {
-                Console.WriteLine("     " + e);
+                Console.WriteLine("ダンプファイルが変更されていないか、全ての変更が無視されました。");
             }
         }
 

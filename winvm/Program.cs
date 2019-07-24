@@ -24,16 +24,6 @@ namespace winvm
                 description: "レジストリのパス",
                 optionType: CommandOptionType.SingleValue
             );
-            var grepKeyOption = app.Option(
-                template: "--grepKey",
-                description: "絞り込む名前(キー)",
-                optionType: CommandOptionType.SingleValue
-            );
-            var grepAttrOption = app.Option(
-                template: "--grepAttr",
-                description: "絞り込む名前(属性)",
-                optionType: CommandOptionType.SingleValue
-            );
 
             app.OnExecute(() =>
             {
@@ -46,6 +36,16 @@ namespace winvm
                 command.Description = "レジストリの中身を保存する";
                 command.HelpOption("-?|-h|--help");
                 var outputArgs = command.Argument("output", "保存先のパス");
+                var grepKeyOption = command.Option(
+                    template: "--grepKey",
+                    description: "絞り込む名前(キー)",
+                    optionType: CommandOptionType.SingleValue
+                );
+                var grepAttrOption = command.Option(
+                    template: "--grepAttr",
+                    description: "絞り込む名前(属性)",
+                    optionType: CommandOptionType.SingleValue
+                );
                 command.OnExecute(() =>
                 {
                     if(outputArgs.Value == null)
@@ -77,6 +77,11 @@ namespace winvm
                 });
             });
             app.Execute(args);
+        }
+
+        static void Load(string path)
+        {
+
         }
 
         static string GetRegistryPath(CommandOption option)

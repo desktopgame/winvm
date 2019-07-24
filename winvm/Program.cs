@@ -48,7 +48,7 @@ namespace winvm
                 );
                 command.OnExecute(() =>
                 {
-                    if(outputArgs.Value == null)
+                    if (outputArgs.Value == null)
                     {
                         command.ShowHelp();
                         return 1;
@@ -85,7 +85,7 @@ namespace winvm
         {
             var regs = new List<RegEntry>();
             var lines = File.ReadLines(path).ToArray();
-            for(int i=0; i<lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 //@line
                 var line = lines[i];
@@ -108,22 +108,22 @@ namespace winvm
                 //@begin-attr-list
                 i++;
                 line = lines[i];
-                if(line != "@begin-attr-list")
+                if (line != "@begin-attr-list")
                 {
                     Console.WriteLine("invalid line: " + line + "<" + i + ">");
                     break;
                 }
-                while(true)
+                while (true)
                 {
                     i++;
                     line = lines[i];
-                    if(line == "@end-attr-list")
+                    if (line == "@end-attr-list")
                     {
                         regs.Add(reg);
                         break;
                     }
                     //@begin-attr
-                    if(line != "@begin-attr")
+                    if (line != "@begin-attr")
                     {
                         Console.WriteLine("invalid line: " + line + "<" + i + ">");
                         return;
@@ -143,7 +143,7 @@ namespace winvm
                     //@end-attr
                     i++;
                     line = lines[i];
-                    if(line != "@end-attr")
+                    if (line != "@end-attr")
                     {
                         Console.WriteLine("invalid line: " + line + "<" + i + ">");
                         return;
@@ -157,7 +157,7 @@ namespace winvm
             {
                 RegistryKey rParentKey =
                  Registry.LocalMachine.OpenSubKey(reg.Key, true);
-                if(rParentKey == null)
+                if (rParentKey == null)
                 {
                     continue;
                 }
@@ -177,7 +177,7 @@ namespace winvm
                             int loadIvalue = (int)int.Parse(loadValue);
                             int readIvalue = (int)realValue;
                             //変更されていない
-                            if(loadIvalue == readIvalue)
+                            if (loadIvalue == readIvalue)
                             {
                                 discardList.Add(saveList[saveList.Count - 1]);
                                 saveList.RemoveAt(saveList.Count - 1);
@@ -187,10 +187,11 @@ namespace winvm
                             Console.WriteLine(realValue + " -> " + loadIvalue);
                             Console.WriteLine("変更してもよろしいですか？(y/n):");
                             var rline = Console.ReadLine();
-                            if(rline.ToLower() == "y" || rline.ToLower() == "yes")
+                            if (rline.ToLower() == "y" || rline.ToLower() == "yes")
                             {
                                 rParentKey.SetValue(key, loadIvalue, RegistryValueKind.DWord);
-                            } else
+                            }
+                            else
                             {
                                 discardList.Add(saveList[saveList.Count - 1]);
                                 saveList.RemoveAt(saveList.Count - 1);
@@ -226,7 +227,7 @@ namespace winvm
                 }
                 rParentKey.Close();
             }
-            if(saveList.Count > 0)
+            if (saveList.Count > 0)
             {
                 Console.WriteLine("変更されなかった一覧");
                 foreach (var e in discardList)
@@ -238,7 +239,8 @@ namespace winvm
                 {
                     Console.WriteLine("     " + e);
                 }
-            } else
+            }
+            else
             {
                 Console.WriteLine("ダンプファイルが変更されていないか、全ての変更が無視されました。");
             }

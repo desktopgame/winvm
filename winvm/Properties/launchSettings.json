@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "winvm": {
-      "commandName": "Project",
-      "commandLineArgs": "load save_file.txt"
-    }
-  }
-}

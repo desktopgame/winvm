@@ -14,7 +14,7 @@ namespace winvm
         public int Count {
             get { return children.Count; }
         }
-        public  RegEntry this[int i] {
+        public RegEntry this[int i] {
             get {
                 return children[i];
             }
@@ -41,14 +41,14 @@ namespace winvm
             e.parent = this;
             children.Add(e);
         }
-        
+
         public string ToString()
         {
             var sb = new StringBuilder();
             sb.AppendLine("@name");
             sb.AppendLine(FullPath());
             sb.AppendLine("@begin-attr-list");
-            foreach(var kv in attribute)
+            foreach (var kv in attribute)
             {
                 sb.AppendLine("@begin-attr");
                 sb.AppendLine(kv.Key);
@@ -56,7 +56,8 @@ namespace winvm
                 if (kv.Value.Value == null)
                 {
                     sb.AppendLine("null");
-                } else
+                }
+                else
                 {
                     sb.AppendLine(kv.Value.Value.ToString());
                 }
@@ -83,7 +84,7 @@ namespace winvm
 
         public bool GrepKey(string key)
         {
-            if(key.Length == 0)
+            if (key.Length == 0)
             {
                 return true;
             }
@@ -92,20 +93,20 @@ namespace winvm
 
         public bool GrepAttr(string attr)
         {
-            if(attr.Length == 0)
+            if (attr.Length == 0)
             {
                 return true;
             }
-            foreach(var kv in attribute)
+            foreach (var kv in attribute)
             {
-                if(kv.Key.Contains(attr))
+                if (kv.Key.Contains(attr))
                 {
                     return true;
                 }
             }
             return false;
         }
-        
+
         public string FullPath()
         {
             return Path;
@@ -124,13 +125,14 @@ namespace winvm
             {
                 var sb = new StringBuilder();
                 sb.Append(Key).Append("\\");
-                foreach(var a  in children)
+                foreach (var a in children)
                 {
                     sb.Append(a.Key).Append("\\");
                 }
                 sb.Remove(sb.Length - 1, 1);
                 return sb.ToString();
-            } else
+            }
+            else
             {
                 var li = new List<RegEntry>();
                 li.AddRange(children);

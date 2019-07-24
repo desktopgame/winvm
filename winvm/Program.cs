@@ -73,6 +73,7 @@ namespace winvm
                         command.ShowHelp();
                         return 1;
                     }
+                    Load(inputArgs.Value);
                     return 0;
                 });
             });
@@ -81,7 +82,11 @@ namespace winvm
 
         static void Load(string path)
         {
-
+            var lines = File.ReadLines(path).ToArray();
+            for(int i=0; i<lines.Length; i++)
+            {
+                Console.WriteLine(lines[i]);
+            }
         }
 
         static string GetRegistryPath(CommandOption option)

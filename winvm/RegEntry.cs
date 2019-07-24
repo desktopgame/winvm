@@ -44,11 +44,12 @@ namespace winvm
         public string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine("name " + FullPath());
-            sb.AppendLine("begin-attr-list");
+            sb.AppendLine("@name");
+            sb.AppendLine(FullPath());
+            sb.AppendLine("@begin-attr-list");
             foreach(var kv in attribute)
             {
-                sb.AppendLine("begin-attr");
+                sb.AppendLine("@begin-attr");
                 sb.AppendLine(kv.Key);
                 sb.AppendLine(kv.Value.Kind.ToString());
                 if (kv.Value.Value == null)
@@ -58,9 +59,9 @@ namespace winvm
                 {
                     sb.AppendLine(kv.Value.Value.ToString());
                 }
-                sb.AppendLine("end-attr");
+                sb.AppendLine("@end-attr");
             }
-            sb.AppendLine("end-attr-list");
+            sb.AppendLine("@end-attr-list");
             return sb.ToString();
         }
 

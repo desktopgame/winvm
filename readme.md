@@ -30,3 +30,13 @@ winvm load save_file.text
 
 # サポートされているデータ型
 * RegistryValueKind.DWord
+
+# マウススクロールを逆にする
+[参考リンク](https://pc-karuma.net/boot-camp-windows-scroll-natural/)
+````
+winvm save --grepAttr FlipFlop save_file.txt
+
+save_file.txtの FlipFlopWheel/FlipFlopHScroll を全て 1 にする
+
+winvm load save_file.txt
+````

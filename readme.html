@@ -412,6 +412,14 @@ winvm save --grepAttr Flip save_file.txt
 <ul>
 <li>RegistryValueKind.DWord</li>
 </ul>
+<h1 id="%E3%83%9E%E3%82%A6%E3%82%B9%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%92%E9%80%86%E3%81%AB%E3%81%99%E3%82%8B">マウススクロールを逆にする</h1>
+<p><a href="https://pc-karuma.net/boot-camp-windows-scroll-natural/">参考リンク</a></p>
+<pre class="hljs"><code><div>winvm save --grepAttr FlipFlop save_file.txt
+
+save_file.txtの FlipFlopWheel/FlipFlopHScroll を全て 1 にする
+
+winvm load save_file.txt
+</div></code></pre>
 
 </body>
 </html>

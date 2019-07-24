@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Win32;
 using System.Linq;
 
 namespace winvm
@@ -38,6 +39,26 @@ namespace winvm
         {
             e.parent = this;
             children.Add(e);
+        }
+        public void Get()
+        {
+            RegistryKey rParentKey =
+                     Registry.LocalMachine.OpenSubKey(FullPath());
+            if(rParentKey == null)
+            {
+                return;
+            }
+            foreach(var e in children)
+            {
+                e.Value = rParentKey.GetValue(e.Key);
+                e.Get();
+            }
+            rParentKey.Close();
+        }
+        
+        public string ToString()
+        {
+            return FullPath() + "  " + Value;
         }
 
         public string FullPath()

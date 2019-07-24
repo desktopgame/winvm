@@ -9,7 +9,7 @@ namespace winvm
 {
     class Program
     {
-        static readonly string ROOT = "SYSTEM\\CurrentControlSet\\Enum";
+        static readonly string ROOT = "SYSTEM\\CurrentControlSet\\Enum\\HID";
         static void Main(string[] args)
         {
             var app = new CommandLineApplication(throwOnUnexpectedArg: false);
@@ -69,6 +69,7 @@ namespace winvm
         static string GetRegTextRecursive(string key)
         {
             var e = GetRegRecursive(key);
+            e.Get();
             var buf = new StringBuilder();
             buf.AppendLine(e.FullPath());
             GetRegTextRecursive(e, buf);
@@ -79,7 +80,7 @@ namespace winvm
         {
             for(int i=0; i<e.Count; i++)
             {
-                sb.AppendLine(e[i].FullPath());
+                sb.AppendLine(e[i].ToString());
                 GetRegTextRecursive(e[i], sb);
             }
         }

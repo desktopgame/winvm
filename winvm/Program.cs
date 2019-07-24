@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Win32;
 using Microsoft.Extensions.CommandLineUtils;
 using System.Text;
@@ -23,6 +24,16 @@ namespace winvm
                 description: "レジストリのパス",
                 optionType: CommandOptionType.SingleValue
             );
+            var grepKeyOption = app.Option(
+                template: "--grepKey",
+                description: "絞り込む名前(キー)",
+                optionType: CommandOptionType.SingleValue
+            );
+            var grepAttrOption = app.Option(
+                template: "--grepAttr",
+                description: "絞り込む名前(属性)",
+                optionType: CommandOptionType.SingleValue
+            );
 
             app.OnExecute(() =>
             {
@@ -37,7 +48,10 @@ namespace winvm
                 var outputArgs = command.Argument("output", "保存先のパス");
                 command.OnExecute(() =>
                 {
-                    File.WriteAllText(outputArgs.Value, GetRegTextRecursive(GetRegistryPath(pathOption)));
+                    File.WriteAllText(
+                        outputArgs.Value,
+                        GetRegTextRecursive(GetRegistryPath(pathOption), GetGrepKey(grepKeyOption), GetGrepAttr(grepAttrOption))
+                    );
                     return 0;
                 });
             });
@@ -66,29 +80,48 @@ namespace winvm
             return ROOT;
         }
 
-        static string GetRegTextRecursive(string key)
+        static string GetGrepKey(CommandOption option)
         {
-            var e = GetRegRecursive(key);
+            if (option.HasValue())
+            {
+                return option.Value();
+            }
+            return "";
+        }
+
+        static string GetGrepAttr(CommandOption option)
+        {
+            if (option.HasValue())
+            {
+                return option.Value();
+            }
+            return "";
+        }
+
+        static string GetRegTextRecursive(string key, string grepKey, string grepAttr)
+        {
+            var e = GetRegRecursive(key, grepKey, grepAttr);
             var buf = new StringBuilder();
+
             GetRegTextRecursive(e, buf);
             return buf.ToString();
         }
 
         static void GetRegTextRecursive(RegEntry e, StringBuilder sb)
         {
-            for(int i=0; i<e.Count; i++)
+            for (int i = 0; i < e.Count; i++)
             {
                 sb.AppendLine(e[i].ToString());
                 GetRegTextRecursive(e[i], sb);
             }
         }
 
-        static RegEntry GetRegRecursive(string key)
+        static RegEntry GetRegRecursive(string key, string grepKey, string grepAttr)
         {
-            return GetRegRecursive(key, key);
+            return GetRegRecursive(key, key, grepKey, grepAttr);
         }
 
-        static RegEntry GetRegRecursive(string key, string name)
+        static RegEntry GetRegRecursive(string key, string name, string grepKey, string grepAttr)
         {
             try
             {
@@ -98,7 +131,7 @@ namespace winvm
                 string[] arySubKeyNames = rParentKey.GetSubKeyNames();
                 //すべての属性を読み込む
                 var attributes = rParentKey.GetValueNames();
-                foreach(var attr in attributes)
+                foreach (var attr in attributes)
                 {
                     var value = rParentKey.GetValue(attr);
                     entry.Put(attr, new RegValue(rParentKey.GetValueKind(attr), value));
@@ -107,7 +140,11 @@ namespace winvm
                 //サブエントリを読み込む
                 foreach (string subKeyName in arySubKeyNames)
                 {
-                    entry.Add(GetRegRecursive(key + "\\" + subKeyName, subKeyName));
+                    var subentry = GetRegRecursive(key + "\\" + subKeyName, subKeyName, grepKey, grepAttr);
+                    if (subentry.GrepKey(grepKey) || subentry.GrepAttr(grepAttr))
+                    {
+                        entry.Add(subentry);
+                    }
                 }
                 return entry;
             }

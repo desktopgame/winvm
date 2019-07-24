@@ -72,6 +72,31 @@ namespace winvm
         {
             return attribute[key];
         }
+
+        public bool GrepKey(string key)
+        {
+            if(key.Length == 0)
+            {
+                return true;
+            }
+            return Key.Contains(key);
+        }
+
+        public bool GrepAttr(string attr)
+        {
+            if(attr.Length == 0)
+            {
+                return true;
+            }
+            foreach(var kv in attribute)
+            {
+                if(kv.Key.Contains(attr))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         
         public string FullPath()
         {

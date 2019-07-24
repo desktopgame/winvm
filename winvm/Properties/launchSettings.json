@@ -2,7 +2,7 @@
   "profiles": {
     "winvm": {
       "commandName": "Project",
-      "commandLineArgs": "save save_file.text"
+      "commandLineArgs": "load save_file.text"
     }
   }
 }

@@ -85,7 +85,67 @@ namespace winvm
             var lines = File.ReadLines(path).ToArray();
             for(int i=0; i<lines.Length; i++)
             {
-                Console.WriteLine(lines[i]);
+                //@line
+                var line = lines[i];
+                //空行ならスキップ
+                if (line.Length == 0)
+                {
+                    continue;
+                }
+                if (line != "@name")
+                {
+                    Console.WriteLine("invalid line: " + line + "<" + i + ">");
+                    break;
+                }
+                //@line
+                //key
+                i++;
+                line = lines[i];
+                var key = line;
+                //@begin-attr-list
+                i++;
+                line = lines[i];
+                if(line != "@begin-attr-list")
+                {
+                    Console.WriteLine("invalid line: " + line + "<" + i + ">");
+                    break;
+                }
+                while(true)
+                {
+                    i++;
+                    line = lines[i];
+                    if(line == "@end-attr-list")
+                    {
+                        break;
+                    }
+                    //@begin-attr
+                    if(line != "@begin-attr")
+                    {
+                        Console.WriteLine("invalid line: " + line + "<" + i + ">");
+                        return;
+                    }
+                    //attr
+                    i++;
+                    line = lines[i];
+                    var attr = line;
+                    //type
+                    i++;
+                    line = lines[i];
+                    var type = line;
+                    //value
+                    i++;
+                    line = lines[i];
+                    var value = line;
+                    //@end-attr
+                    i++;
+                    line = lines[i];
+                    if(line != "@end-attr")
+                    {
+                        Console.WriteLine("invalid line: " + line + "<" + i + ">");
+                        return;
+                    }
+                    Console.WriteLine(attr + " " + type + " " + value);
+                }
             }
         }
 

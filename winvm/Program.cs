@@ -69,7 +69,6 @@ namespace winvm
         static string GetRegTextRecursive(string key)
         {
             var e = GetRegRecursive(key);
-            e.Get();
             var buf = new StringBuilder();
             buf.AppendLine(e.FullPath());
             GetRegTextRecursive(e, buf);
@@ -94,11 +93,19 @@ namespace winvm
         {
             try
             {
-                var entry = new RegEntry(name, "v");
+                var entry = new RegEntry(name);
                 RegistryKey rParentKey =
                      Registry.LocalMachine.OpenSubKey(key);
                 string[] arySubKeyNames = rParentKey.GetSubKeyNames();
+                //すべての属性を読み込む
+                var attributes = rParentKey.GetValueNames();
+                foreach(var attr in attributes)
+                {
+                    var value = rParentKey.GetValue(attr);
+                    entry.Put(attr, new RegValue(rParentKey.GetValueKind(attr), value));
+                }
                 rParentKey.Close();
+                //サブエントリを読み込む
                 foreach (string subKeyName in arySubKeyNames)
                 {
                     entry.Add(GetRegRecursive(key + "\\" + subKeyName, subKeyName));

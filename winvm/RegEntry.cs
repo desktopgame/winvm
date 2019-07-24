@@ -9,7 +9,6 @@ namespace winvm
     class RegEntry
     {
         public string Key { private set; get; }
-        public object Value { private set; get; }
         public bool IsError { private set; get; }
         public int Count {
             get { return children.Count; }
@@ -22,16 +21,17 @@ namespace winvm
 
         private RegEntry parent;
         private List<RegEntry> children;
+        private Dictionary<string, RegValue> attribute;
 
-        public RegEntry(string key, object value)
+        public RegEntry(string key)
         {
             this.Key = key;
-            this.Value = value;
             this.children = new List<RegEntry>();
+            this.attribute = new Dictionary<string, RegValue>();
         }
         public static RegEntry Error(string key)
         {
-            var ret = new RegEntry(key, "");
+            var ret = new RegEntry(key);
             ret.IsError = true;
             return ret;
         }
@@ -40,27 +40,28 @@ namespace winvm
             e.parent = this;
             children.Add(e);
         }
-        public void Get()
-        {
-            RegistryKey rParentKey =
-                     Registry.LocalMachine.OpenSubKey(FullPath());
-            if(rParentKey == null)
-            {
-                return;
-            }
-            foreach(var e in children)
-            {
-                e.Value = rParentKey.GetValue(e.Key);
-                e.Get();
-            }
-            rParentKey.Close();
-        }
         
         public string ToString()
         {
-            return FullPath() + "  " + Value;
+            var sb = new StringBuilder();
+            sb.AppendLine(FullPath());
+            foreach(var kv in attribute)
+            {
+                sb.AppendLine("    " + kv.Key + " " + kv.Value.Value);
+            }
+            return sb.ToString();
         }
 
+        public void Put(string key, RegValue v)
+        {
+            attribute[key] = v;
+        }
+
+        public RegValue Get(string key)
+        {
+            return attribute[key];
+        }
+        
         public string FullPath()
         {
             if(parent == null)

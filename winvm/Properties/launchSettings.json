@@ -2,7 +2,7 @@
   "profiles": {
     "winvm": {
       "commandName": "Project",
-      "commandLineArgs": "--grepAttr Flip save save_file.text"
+      "commandLineArgs": "--grepAttr Flip save"
     }
   }
 }

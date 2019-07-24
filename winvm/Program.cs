@@ -48,6 +48,11 @@ namespace winvm
                 var outputArgs = command.Argument("output", "保存先のパス");
                 command.OnExecute(() =>
                 {
+                    if(outputArgs.Value == null)
+                    {
+                        command.ShowHelp();
+                        return 1;
+                    }
                     File.WriteAllText(
                         outputArgs.Value,
                         GetRegTextRecursive(GetRegistryPath(pathOption), GetGrepKey(grepKeyOption), GetGrepAttr(grepAttrOption))
@@ -60,11 +65,14 @@ namespace winvm
             {
                 command.Description = "レジストリの中身を復元する";
                 command.HelpOption("-?|-h|--help");
-                var outputArgs = command.Argument("input", "読み込み元のパス");
+                var inputArgs = command.Argument("input", "読み込み元のパス");
                 command.OnExecute(() =>
                 {
-                    var location = outputArgs.Value;
-                    Console.WriteLine("Hoge: " + location);
+                    if (inputArgs.Value == null)
+                    {
+                        command.ShowHelp();
+                        return 1;
+                    }
                     return 0;
                 });
             });

@@ -150,7 +150,9 @@ namespace winvm
                     reg.Put(attr, new RegValue((RegistryValueKind)Enum.Parse(typeof(RegistryValueKind), type), value));
                 }
             }
-            foreach(var reg in regs)
+            var saveList = new List<string>();
+            var discardList = new List<string>();
+            foreach (var reg in regs)
             {
                 RegistryKey rParentKey =
                  Registry.LocalMachine.OpenSubKey(reg.Key);
@@ -163,9 +165,12 @@ namespace winvm
                     var regValue = reg.Get(key);
                     var loadValue = (string)regValue.Value;
                     var realValue = rParentKey.GetValue(key);
+                    saveList.Add(reg.Key + " " + key);
                     switch (regValue.Kind)
                     {
                         case RegistryValueKind.Binary:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         case RegistryValueKind.DWord:
                             int loadIvalue = (int)int.Parse(loadValue);
@@ -173,29 +178,62 @@ namespace winvm
                             //変更されていない
                             if(loadIvalue == readIvalue)
                             {
+                                discardList.Add(saveList[saveList.Count - 1]);
+                                saveList.RemoveAt(saveList.Count - 1);
                                 break;
                             }
-                            Console.WriteLine("changed: " + reg.Key + " " + key);
+                            Console.WriteLine(reg.Key + " " + key);
                             Console.WriteLine(realValue + " -> " + loadIvalue);
-                            //rParentKey.SetValue(key, loadIvalue, RegistryValueKind.DWord);
+                            Console.WriteLine("変更してもよろしいですか？(y/n):");
+                            var rline = Console.ReadLine();
+                            if(rline.ToLower() == "y" || rline.ToLower() == "yes")
+                            {
+                                rParentKey.SetValue(key, loadIvalue, RegistryValueKind.DWord);
+                            } else
+                            {
+                                discardList.Add(saveList[saveList.Count - 1]);
+                                saveList.RemoveAt(saveList.Count - 1);
+                            }
                             break;
                         case RegistryValueKind.ExpandString:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         case RegistryValueKind.MultiString:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         case RegistryValueKind.None:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         case RegistryValueKind.QWord:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         case RegistryValueKind.String:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         case RegistryValueKind.Unknown:
+                            discardList.Add(saveList[saveList.Count - 1]);
+                            saveList.RemoveAt(saveList.Count - 1);
                             break;
                         default:
                             break;
                     }
                 }
                 rParentKey.Close();
+            }
+            Console.WriteLine("変更されなかった一覧");
+            foreach(var e in discardList)
+            {
+                Console.WriteLine("    " + e);
+            }
+            Console.WriteLine("変更された一覧");
+            foreach (var e in saveList)
+            {
+                Console.WriteLine("     " + e);
             }
         }
 

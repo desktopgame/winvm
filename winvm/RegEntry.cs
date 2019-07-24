@@ -9,6 +9,7 @@ namespace winvm
     class RegEntry
     {
         public string Key { private set; get; }
+        public string Path { set; get; }
         public bool IsError { private set; get; }
         public int Count {
             get { return children.Count; }
@@ -75,6 +76,11 @@ namespace winvm
             return attribute[key];
         }
 
+        public string[] Keys()
+        {
+            return attribute.Keys.ToArray();
+        }
+
         public bool GrepKey(string key)
         {
             if(key.Length == 0)
@@ -102,11 +108,14 @@ namespace winvm
         
         public string FullPath()
         {
+            return Path;
+            /*
             if(parent == null)
             {
                 return Key;
             }
             return parent.FullPath(new RegEntry[] { this});
+            */
         }
 
         private string FullPath(RegEntry[] children)

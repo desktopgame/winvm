@@ -82,6 +82,7 @@ namespace winvm
 
         static void Load(string path)
         {
+            var regs = new List<RegEntry>();
             var lines = File.ReadLines(path).ToArray();
             for(int i=0; i<lines.Length; i++)
             {
@@ -102,6 +103,7 @@ namespace winvm
                 i++;
                 line = lines[i];
                 var key = line;
+                var reg = new RegEntry(key);
                 //@begin-attr-list
                 i++;
                 line = lines[i];
@@ -144,8 +146,56 @@ namespace winvm
                         Console.WriteLine("invalid line: " + line + "<" + i + ">");
                         return;
                     }
-                    Console.WriteLine(attr + " " + type + " " + value);
+                    reg.Put(attr, new RegValue((RegistryValueKind)Enum.Parse(typeof(RegistryValueKind), type), value));
+                    regs.Add(reg);
                 }
+            }
+            foreach(var reg in regs)
+            {
+                RegistryKey rParentKey =
+                 Registry.LocalMachine.OpenSubKey(reg.Key);
+                if(rParentKey == null)
+                {
+                    continue;
+                }
+                foreach (var key in reg.Keys())
+                {
+                    var regValue = reg.Get(key);
+                    var loadValue = (string)regValue.Value;
+                    var realValue = rParentKey.GetValue(key);
+                    switch (regValue.Kind)
+                    {
+                        case RegistryValueKind.Binary:
+                            break;
+                        case RegistryValueKind.DWord:
+                            int loadIvalue = (int)int.Parse(loadValue);
+                            int readIvalue = (int)realValue;
+                            //変更されていない
+                            if(loadIvalue == readIvalue)
+                            {
+                                break;
+                            }
+                            Console.WriteLine("changed: " + reg.Key + " " + key);
+                            Console.WriteLine(realValue + " -> " + loadIvalue);
+                            //rParentKey.SetValue(key, loadIvalue, RegistryValueKind.DWord);
+                            break;
+                        case RegistryValueKind.ExpandString:
+                            break;
+                        case RegistryValueKind.MultiString:
+                            break;
+                        case RegistryValueKind.None:
+                            break;
+                        case RegistryValueKind.QWord:
+                            break;
+                        case RegistryValueKind.String:
+                            break;
+                        case RegistryValueKind.Unknown:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                rParentKey.Close();
             }
         }
 
@@ -204,6 +254,7 @@ namespace winvm
             try
             {
                 var entry = new RegEntry(name);
+                entry.Path = key;
                 RegistryKey rParentKey =
                      Registry.LocalMachine.OpenSubKey(key);
                 string[] arySubKeyNames = rParentKey.GetSubKeyNames();

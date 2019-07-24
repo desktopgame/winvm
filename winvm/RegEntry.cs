@@ -44,11 +44,22 @@ namespace winvm
         public string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine(FullPath());
+            sb.AppendLine("name " + FullPath());
+            sb.AppendLine("begin-attr-list");
             foreach(var kv in attribute)
             {
-                sb.AppendLine("    " + kv.Key + " " + kv.Value.Value);
+                sb.AppendLine("begin-attr");
+                sb.AppendLine(kv.Key);
+                if(kv.Value.Value == null)
+                {
+                    sb.AppendLine("null");
+                } else
+                {
+                    sb.AppendLine(kv.Value.Value.ToString());
+                }
+                sb.AppendLine("end-attr");
             }
+            sb.AppendLine("end-attr-list");
             return sb.ToString();
         }
 

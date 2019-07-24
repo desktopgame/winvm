@@ -70,7 +70,6 @@ namespace winvm
         {
             var e = GetRegRecursive(key);
             var buf = new StringBuilder();
-            buf.AppendLine(e.FullPath());
             GetRegTextRecursive(e, buf);
             return buf.ToString();
         }

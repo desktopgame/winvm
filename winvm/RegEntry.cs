@@ -50,7 +50,8 @@ namespace winvm
             {
                 sb.AppendLine("begin-attr");
                 sb.AppendLine(kv.Key);
-                if(kv.Value.Value == null)
+                sb.AppendLine(kv.Value.Kind.ToString());
+                if (kv.Value.Value == null)
                 {
                     sb.AppendLine("null");
                 } else

@@ -27,3 +27,6 @@ winvm save --grepAttr Flip save_file.txt
 ````
 winvm load save_file.text
 ````
+
+# サポートされているデータ型
+* RegistryValueKind.DWord

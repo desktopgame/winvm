@@ -118,6 +118,7 @@ namespace winvm
                     line = lines[i];
                     if(line == "@end-attr-list")
                     {
+                        regs.Add(reg);
                         break;
                     }
                     //@begin-attr
@@ -147,7 +148,6 @@ namespace winvm
                         return;
                     }
                     reg.Put(attr, new RegValue((RegistryValueKind)Enum.Parse(typeof(RegistryValueKind), type), value));
-                    regs.Add(reg);
                 }
             }
             foreach(var reg in regs)

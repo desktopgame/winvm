@@ -15,9 +15,21 @@ namespace winvmSetupAction
         public override void Install(System.Collections.IDictionary stateSaver)
         {
             base.Install(stateSaver);
-
+            var dllPath = Context.Parameters["assemblyPath"];
+            var dllDir = Path.GetDirectoryName(dllPath);
             var addToPath = (this.Context.Parameters["addToPath"]);
-            System.Windows.Forms.MessageBox.Show(addToPath.ToString());
+            if (addToPath == "1")
+            {
+                var envVarPath = Environment.GetEnvironmentVariable("Path",
+                              EnvironmentVariableTarget.Machine);
+                File.AppendAllText("env_Path.text", envVarPath + "\n");
+                if (!envVarPath.Contains(dllDir))
+                {
+                    var newVar = envVarPath + ";" + dllDir;
+                    System.Windows.Forms.MessageBox.Show(envVarPath + "@@@\n" + newVar);
+                    //Environment.SetEnvironmentVariable("Path", newVar);
+                }
+            }
         }
 
         public override void Commit(System.Collections.IDictionary savedState)
@@ -33,8 +45,17 @@ namespace winvmSetupAction
         public override void Uninstall(System.Collections.IDictionary savedState)
         {
             base.Uninstall(savedState);
-            File.Delete("install.text");
-            System.Windows.Forms.MessageBox.Show("テスト2");
+            var dllPath = Context.Parameters["assemblyPath"];
+            var dllDir = Path.GetDirectoryName(dllPath);
+            var addToPath = (this.Context.Parameters["addToPath"]);
+            var envVarPath = Environment.GetEnvironmentVariable("Path",
+                              EnvironmentVariableTarget.Machine);
+            if (envVarPath.Contains(dllDir))
+            {
+                var index = envVarPath.IndexOf(dllDir);
+                var newVar = envVarPath.Remove(index, dllDir.Length);
+                System.Windows.Forms.MessageBox.Show(envVarPath + "@@@\n" + newVar);
+            }
         }
 
         private void InitializeComponent()

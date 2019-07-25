@@ -51,7 +51,7 @@ namespace winvmSetupAction
         {
             var envVarPath = Environment.GetEnvironmentVariable("Path",
                               EnvironmentVariableTarget.Machine);
-            File.AppendAllText("env_Path.text", envVarPath + "\n");
+            File.AppendAllText(path + Path.DirectorySeparatorChar + "env_Path.text", envVarPath + "\n");
             if (!envVarPath.Contains(path))
             {
                 var newVar = envVarPath + ";" + path;

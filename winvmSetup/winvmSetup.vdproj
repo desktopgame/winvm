@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0C4E741596994425A080FADA581E6A80"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_290597C8D974F09E6E686BE65B21EE98"
         "OwnerKey" = "8:_B4E333D775864DA7A7BC0CF056A9314D"
         "MsmSig" = "8:_UNDEFINED"
@@ -29,6 +23,12 @@
         {
         "MsmKey" = "8:_54E3469CBC7F6BCC586C0D95C430EF47"
         "OwnerKey" = "8:_B4E333D775864DA7A7BC0CF056A9314D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_602A248E40034AF9B6859277D79C6A96"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_C7E3021CC58623A51560E5956DBCB243"
-        "OwnerKey" = "8:_B4E333D775864DA7A7BC0CF056A9314D"
+        "OwnerKey" = "8:_602A248E40034AF9B6859277D79C6A96"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C7E3021CC58623A51560E5956DBCB243"
-        "OwnerKey" = "8:_0C4E741596994425A080FADA581E6A80"
+        "OwnerKey" = "8:_B4E333D775864DA7A7BC0CF056A9314D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -65,18 +65,6 @@
         {
         "MsmKey" = "8:_F8CF444F2825399B0F246C35A462773B"
         "OwnerKey" = "8:_B4E333D775864DA7A7BC0CF056A9314D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C7E3021CC58623A51560E5956DBCB243"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0C4E741596994425A080FADA581E6A80"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -107,6 +95,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_54E3469CBC7F6BCC586C0D95C430EF47"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_602A248E40034AF9B6859277D79C6A96"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C7E3021CC58623A51560E5956DBCB243"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -181,63 +181,33 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_41DC5946873A4C2A8677BC3F969FF915"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_04B8A3AEF7914569AA8802438A895CD3"
             {
             "Name" = "8:プライマリ出力 from winvmSetupAction (Active)"
             "Condition" = "8:"
-            "Object" = "8:_0C4E741596994425A080FADA581E6A80"
+            "Object" = "8:_602A248E40034AF9B6859277D79C6A96"
             "FileType" = "3:1"
             "InstallAction" = "3:4"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_63BCBC18_894B_4E57_93D4_42A368A863EE"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            "Run64Bit" = "11:FALSE"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_9A9B5621A4D342EF8270C087A1A49057"
-            {
-            "Name" = "8:プライマリ出力 from winvmSetupAction (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_0C4E741596994425A080FADA581E6A80"
-            "FileType" = "3:1"
-            "InstallAction" = "3:3"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_66DDD260_2252_40F3_875E_D6B4277404FE"
+            "Identifier" = "8:_21AB7D8C_7995_48E3_88AC_0E7DD0EF526E"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_FE0ED69C37F44BFCBEFDEECAD1C9E975"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_835CEC4DB6BE4905A1A59E5CEC7F578D"
             {
             "Name" = "8:プライマリ出力 from winvmSetupAction (Active)"
             "Condition" = "8:"
-            "Object" = "8:_0C4E741596994425A080FADA581E6A80"
-            "FileType" = "3:1"
-            "InstallAction" = "3:2"
-            "Arguments" = "8:"
-            "EntryPoint" = "8:"
-            "Sequence" = "3:1"
-            "Identifier" = "8:_D172C18D_AB67_41DE_8A7F_0476FA3682D0"
-            "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:"
-            }
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_FF1BBBA98A4241E99A5BF731C8D5A9BF"
-            {
-            "Name" = "8:プライマリ出力 from winvmSetupAction (Active)"
-            "Condition" = "8:"
-            "Object" = "8:_0C4E741596994425A080FADA581E6A80"
+            "Object" = "8:_602A248E40034AF9B6859277D79C6A96"
             "FileType" = "3:1"
             "InstallAction" = "3:1"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_B90361BB_D597_4FC7_9C35_28F0A6B1EB3A"
+            "Identifier" = "8:_6587985B_9BAD_4A62_A641_213099E44DC1"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:/addToPath=[ADD_TO_PATH]"
-            "Run64Bit" = "11:FALSE"
             }
         }
         "DefaultFeature"
@@ -494,7 +464,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:winvmSetup"
         "ProductCode" = "8:{FCAF317D-DE69-40C1-B2D6-3B388E11281E}"
-        "PackageCode" = "8:{994B7D48-B7D1-4E5A-87B9-45BB0B18870D}"
+        "PackageCode" = "8:{A87A3DEE-8BD3-418E-BFA8-7B945CA27BE0}"
         "UpgradeCode" = "8:{33185B2D-FAD7-4DBA-B77A-1B8129BB23BA}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -753,7 +723,7 @@
                             "ContextData" = "8:Unchecked=;Checked=1"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:"
+                            "Value" = "8:1"
                             "DefaultValue" = "8:"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -1269,7 +1239,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0C4E741596994425A080FADA581E6A80"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_602A248E40034AF9B6859277D79C6A96"
             {
             "SourcePath" = "8:..\\winvmSetupAction\\obj\\x86\\Debug\\winvmSetupAction.dll"
             "TargetName" = "8:"

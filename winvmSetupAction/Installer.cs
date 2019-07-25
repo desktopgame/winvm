@@ -20,14 +20,7 @@ namespace winvmSetupAction
             var addToPath = (this.Context.Parameters["addToPath"]);
             if (addToPath == "1")
             {
-                var envVarPath = Environment.GetEnvironmentVariable("Path",
-                              EnvironmentVariableTarget.Machine);
-                File.AppendAllText("env_Path.text", envVarPath + "\n");
-                if (!envVarPath.Contains(dllDir))
-                {
-                    var newVar = envVarPath + ";" + dllDir;
-                    Environment.SetEnvironmentVariable("Path", newVar, EnvironmentVariableTarget.Machine);
-                }
+                AddPath(EnvironmentVariableTarget.Machine, dllDir);
             }
         }
 
@@ -46,21 +39,37 @@ namespace winvmSetupAction
             base.Uninstall(savedState);
             var dllPath = Context.Parameters["assemblyPath"];
             var dllDir = Path.GetDirectoryName(dllPath);
-            var addToPath = (this.Context.Parameters["addToPath"]);
-            var envVarPath = Environment.GetEnvironmentVariable("Path",
-                              EnvironmentVariableTarget.Machine);
-            if (envVarPath.Contains(dllDir))
-            {
-                var index = envVarPath.IndexOf(dllDir);
-                var newVar = envVarPath.Remove(index, dllDir.Length);
-                newVar = newVar.Replace(";;", ";");
-                Environment.SetEnvironmentVariable("Path", newVar, EnvironmentVariableTarget.Machine);
-            }
+            RemovePath(EnvironmentVariableTarget.Machine, dllDir);
         }
 
         private void InitializeComponent()
         {
 
+        }
+
+        private static void AddPath(EnvironmentVariableTarget target, string path)
+        {
+            var envVarPath = Environment.GetEnvironmentVariable("Path",
+                              EnvironmentVariableTarget.Machine);
+            File.AppendAllText("env_Path.text", envVarPath + "\n");
+            if (!envVarPath.Contains(path))
+            {
+                var newVar = envVarPath + ";" + path;
+                Environment.SetEnvironmentVariable("Path", newVar, EnvironmentVariableTarget.Machine);
+            }
+        }
+
+        private static void RemovePath(EnvironmentVariableTarget target, string path)
+        {
+            var envVarPath = Environment.GetEnvironmentVariable("Path",
+                              EnvironmentVariableTarget.Machine);
+            if (envVarPath.Contains(path))
+            {
+                var index = envVarPath.IndexOf(path);
+                var newVar = envVarPath.Remove(index, path.Length);
+                newVar = newVar.Replace(";;", ";");
+                Environment.SetEnvironmentVariable("Path", newVar, EnvironmentVariableTarget.Machine);
+            }
         }
     }
 }

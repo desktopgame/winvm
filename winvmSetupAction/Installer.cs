@@ -26,7 +26,7 @@ namespace winvmSetupAction
                 if (!envVarPath.Contains(dllDir))
                 {
                     var newVar = envVarPath + ";" + dllDir;
-                    Environment.SetEnvironmentVariable("Path", newVar);
+                    Environment.SetEnvironmentVariable("Path", newVar, EnvironmentVariableTarget.Machine);
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace winvmSetupAction
                 var index = envVarPath.IndexOf(dllDir);
                 var newVar = envVarPath.Remove(index, dllDir.Length);
                 newVar = newVar.Replace(";;", ";");
-                Environment.SetEnvironmentVariable("Path", newVar);
+                Environment.SetEnvironmentVariable("Path", newVar, EnvironmentVariableTarget.Machine);
             }
         }
 
